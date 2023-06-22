@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:serenity/pages/favoritepage.dart';
-import 'package:serenity/pages/profilepage.dart';
-import 'package:serenity/pages/homepage.dart';
-
+import 'package:serenity/pages/favorite_page.dart';
+import 'package:serenity/pages/profile_page.dart';
+import 'package:serenity/pages/home_page.dart';
 import '../utils/colors.dart';
 
 class BottomBar extends StatefulWidget {
@@ -54,14 +53,14 @@ class _BottomBarState extends State<BottomBar> {
           BottomNavigationBarItem(
               icon: SvgPicture.asset("assets/svgs/favorite-icon.svg"),
               activeIcon: SvgPicture.asset(
-                "assets/svgs/home-icon.svg",
+                "assets/svgs/favorite-icon.svg",
                 color: primary,
               ),
               label: "Favorite"),
           BottomNavigationBarItem(
               icon: SvgPicture.asset("assets/svgs/profile-icon.svg"),
               activeIcon: SvgPicture.asset(
-                "assets/svgs/home-icon.svg",
+                "assets/svgs/profile-icon.svg",
                 color: primary,
               ),
               label: "Profile"),

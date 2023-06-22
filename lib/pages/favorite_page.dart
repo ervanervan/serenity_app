@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:serenity/pages/bottom_bar.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:serenity/data/datas.dart';
-import 'package:serenity/pages/Homepage.dart';
 import '../utils/text_style.dart';
+import 'home_page.dart';
 
 class CardWishlist extends StatelessWidget {
   final String image;
@@ -101,7 +102,7 @@ class FavoritePage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const HomePage()));
+                    MaterialPageRoute(builder: (context) => const BottomBar()));
               },
               icon: SvgPicture.asset("assets/svgs/chevron-left.svg"),
             ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:serenity/pages/bottombar.dart';
+import 'package:serenity/pages/bottom_bar.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
