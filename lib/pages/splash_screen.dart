@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:serenity/colors.dart';
+import 'package:serenity/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:serenity/screens/homescreen.dart';
+import 'package:serenity/pages/bottombar.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+                  .push(MaterialPageRoute(builder: (context) => BottomBar()));
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

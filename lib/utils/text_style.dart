@@ -43,5 +43,17 @@ TextStyle BodyCategoryOff = GoogleFonts.mulish(
   fontWeight: FontWeight.w500,
 );
 
+TextStyle SubHeadingWishlistCard = GoogleFonts.mulish(
+  fontSize: 16,
+  color: Color(0xff3E3E3E),
+  fontWeight: FontWeight.w700,
+);
+
+TextStyle BodyWishlistCard = GoogleFonts.mulish(
+  fontSize: 10,
+  color: Color(0xff3E3E3E),
+  fontWeight: FontWeight.w300,
+);
+
 TextStyle LabelPlaceholder = GoogleFonts.mulish(
     fontSize: 12, color: Color(0xff7F7F7F), fontWeight: FontWeight.w500);

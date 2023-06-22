@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:serenity/screens/splash_screen.dart';
+import 'package:serenity/pages/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
