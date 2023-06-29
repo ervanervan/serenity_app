@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:serenity/utils/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:serenity/pages/bottom_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:serenity/pages/login_page.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ),
+          (route) => false);
+    });
+
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor:
+          Colors.white, // Ganti dengan warna latar belakang yang diinginkan
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Center(
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => BottomBar()));
-            },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -35,6 +40,17 @@ class SplashScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
+                // RichText(
+                //     textAlign: TextAlign.center,
+                //     text: TextSpan(
+                //       text:
+                //           "Senayan Equstrian Ragunan\nErlangga Nilam Hang\nTuah Yselatan",
+                //       style: GoogleFonts.mulish(
+                //         fontSize: 10,
+                //         fontWeight: FontWeight.w600,
+                //         color: Color(0xFF000000),
+                //       ),
+                //     )),
                 Text(
                   'Senayan Equstrian Ragunan Erlangga Nilam Hang Tuah Yselatan',
                   style: GoogleFonts.mulish(
@@ -42,12 +58,12 @@ class SplashScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
-                )
+                ),
               ],
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 }

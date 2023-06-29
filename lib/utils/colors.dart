@@ -9,3 +9,4 @@ Color textButton = const Color(0xFFF6F6F6);
 Color textButton2 = const Color(0xFF1A1A1A);
 Color textButton3 = const Color(0xFF7F7F7F);
 Color purple = const Color(0xFF9383FB);
+Color danger = const Color(0xffFF472E);

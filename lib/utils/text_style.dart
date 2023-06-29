@@ -30,6 +30,11 @@ TextStyle BodyButton = GoogleFonts.mulish(
   color: Color(0xffFFFFFF),
   fontWeight: FontWeight.w700,
 );
+TextStyle BodyButtonLarge = GoogleFonts.mulish(
+  fontSize: 16,
+  color: Color(0xffFFFFFF),
+  fontWeight: FontWeight.w700,
+);
 
 TextStyle BodyCategory = GoogleFonts.mulish(
   fontSize: 10,
@@ -57,3 +62,6 @@ TextStyle BodyWishlistCard = GoogleFonts.mulish(
 
 TextStyle LabelPlaceholder = GoogleFonts.mulish(
     fontSize: 12, color: Color(0xff7F7F7F), fontWeight: FontWeight.w500);
+
+TextStyle InputField = GoogleFonts.mulish(
+    fontSize: 16, color: Color(0xff7F7F7F), fontWeight: FontWeight.w500);

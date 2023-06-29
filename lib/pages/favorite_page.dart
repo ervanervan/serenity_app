@@ -4,7 +4,6 @@ import 'package:serenity/pages/bottom_bar.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:serenity/data/datas.dart';
 import '../utils/text_style.dart';
-import 'home_page.dart';
 
 class CardWishlist extends StatelessWidget {
   final String image;

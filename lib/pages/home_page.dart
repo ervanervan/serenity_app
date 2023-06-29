@@ -184,8 +184,23 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Container(
-                            child: SvgPicture.asset("assets/svgs/logo.svg",
-                                width: 32, height: 32)),
+                          child: SvgPicture.asset("assets/svgs/logo.svg",
+                              width: 32, height: 32),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.only(right: 120),
+                            child: Text(
+                              'Hi, username hahhahahhahahahahhahahahhahahahhahhahahhaa',
+                              overflow: TextOverflow.ellipsis,
+                              style: BodyLocation,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Container(
