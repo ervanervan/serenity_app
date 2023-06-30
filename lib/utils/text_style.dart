@@ -19,6 +19,9 @@ TextStyle Body1 = GoogleFonts.mulish(
 TextStyle BodyLocation = GoogleFonts.mulish(
     fontSize: 12, color: Color(0xff4E4E4E), fontWeight: FontWeight.w500);
 
+TextStyle Visitors = GoogleFonts.mulish(
+    fontSize: 12, color: Color(0xff9383FB), fontWeight: FontWeight.bold);
+
 TextStyle Body2 = GoogleFonts.mulish(
   fontSize: 10,
   color: Color(0xff1A1A1A),
@@ -46,6 +49,12 @@ TextStyle BodyCategoryOff = GoogleFonts.mulish(
   fontSize: 10,
   color: Color(0xff3E3E3E),
   fontWeight: FontWeight.w500,
+);
+
+TextStyle Description = GoogleFonts.mulish(
+  fontSize: 12,
+  color: Color(0xff3E3E3E),
+  fontWeight: FontWeight.w400,
 );
 
 TextStyle SubHeadingWishlistCard = GoogleFonts.mulish(

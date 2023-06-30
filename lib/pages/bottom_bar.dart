@@ -46,21 +46,21 @@ class _BottomBarState extends State<BottomBar> {
           BottomNavigationBarItem(
               icon: SvgPicture.asset("assets/svgs/home-icon.svg"),
               activeIcon: SvgPicture.asset(
-                "assets/svgs/home-icon.svg",
+                "assets/svgs/home-dark-icon.svg",
                 color: primary,
               ),
               label: "Home"),
           BottomNavigationBarItem(
               icon: SvgPicture.asset("assets/svgs/favorite-icon.svg"),
               activeIcon: SvgPicture.asset(
-                "assets/svgs/favorite-icon.svg",
+                "assets/svgs/favorite-dark-icon.svg",
                 color: primary,
               ),
               label: "Favorite"),
           BottomNavigationBarItem(
               icon: SvgPicture.asset("assets/svgs/profile-icon.svg"),
               activeIcon: SvgPicture.asset(
-                "assets/svgs/profile-icon.svg",
+                "assets/svgs/profile-dark-icon.svg",
                 color: primary,
               ),
               label: "Profile"),
