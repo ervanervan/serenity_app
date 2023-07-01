@@ -5,11 +5,12 @@ import '../utils/text_style.dart';
 import 'details_page.dart';
 
 class CardItem extends StatelessWidget {
-  final int id;
+  final String id;
   final double scale;
   final bool isActive;
   final String image;
   final String title;
+  final String category;
   final String location;
   final String description;
   final int jumlah;
@@ -22,7 +23,9 @@ class CardItem extends StatelessWidget {
       required this.title,
       required this.description,
       required this.location,
-      required this.jumlah});
+      required this.jumlah,
+      required this.category,
+      });
 
   @override
   Widget build(BuildContext context) {

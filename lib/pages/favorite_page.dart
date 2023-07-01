@@ -33,7 +33,6 @@ class CardWishlist extends StatelessWidget {
             fit: BoxFit.cover,
             height: 100,
           ),
-          // SizedBox(width: 35.5,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
@@ -66,26 +65,49 @@ class CardWishlist extends StatelessWidget {
   }
 }
 
-List<DataPlace> dataWishlist = dataForCard;
+class FavoritePage extends StatefulWidget {
+  const FavoritePage({Key? key}) : super(key: key);
 
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({super.key});
+  @override
+  _FavoritePageState createState() => _FavoritePageState();
+}
+
+class _FavoritePageState extends State<FavoritePage> {
+  List<DataPlace> dataWishlist = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData().then((data) {
+      setState(() {
+        dataWishlist = data;
+      });
+    });
+  }
+
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
       appBar: _appBar(context),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Column(
               children: dataWishlist.map((data) {
-            return CardWishlist(
-                image: data.image, title: data.title, location: data.location);
-          }).toList()),
+                return CardWishlist(
+                  image: data.image,
+                  title: data.title,
+                  location: data.location,
+                );
+              }).toList(),
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 
@@ -101,7 +123,8 @@ class FavoritePage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const BottomBar()));
+                  MaterialPageRoute(builder: (context) => const BottomBar()),
+                );
               },
               icon: SvgPicture.asset("assets/svgs/chevron-left.svg"),
             ),
