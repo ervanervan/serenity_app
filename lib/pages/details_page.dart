@@ -3,9 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/text_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'bottom_bar.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
+  final String id;
   final String title;
   final String image;
   final String description;
@@ -13,12 +15,20 @@ class DetailsPage extends StatelessWidget {
   final int jumlah;
 
   DetailsPage({
+    required this.id,
     required this.title,
     required this.image,
     required this.description,
-    required this.jumlah,
     required this.urlmap,
+    required this.jumlah,
   });
+
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  bool _isFavorite = false;
 
   String formatAngka(int angka) {
     if (angka >= 1000000000) {
@@ -35,12 +45,67 @@ class DetailsPage extends StatelessWidget {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkFavorite();
+  }
+
   void _openMapUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void _checkFavorite() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favorites = prefs.getStringList("favorite") ?? [];
+
+    if (favorites.contains(widget.id)) {
+      setState(() {
+        _isFavorite = true;
+      });
+    }
+  }
+
+  void addToFavorite() async {
+    print("saved");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favorites = prefs.getStringList("favorite") ?? [];
+
+    if (favorites.contains(widget.id)) {
+      favorites.remove(widget.id);
+      setState(() {
+        _isFavorite = false;
+      });
+    } else {
+      favorites.add(widget.id);
+      setState(() {
+        _isFavorite = true;
+      });
+    }
+
+    await prefs.setStringList("favorite", favorites);
+    print("favorites >> $favorites");
+  }
+
+  void removeFromFavorite() async {
+    print("removed");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favorites = prefs.getStringList("favorite") ?? [];
+
+    if (favorites.contains(widget.id)) {
+      favorites.remove(widget.id);
+      setState(() {
+        _isFavorite = false;
+      });
+    }
+
+    await prefs.setStringList("favorite", favorites);
+    print("favorites >> $favorites");
+
   }
 
   @override
@@ -65,7 +130,7 @@ class DetailsPage extends StatelessWidget {
                       color: primary,
                     ),
                     child: Image.network(
-                      image,
+                      widget.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -77,7 +142,7 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          '$title',
+                          '${widget.title}',
                           style: SubHeading1,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -94,7 +159,7 @@ class DetailsPage extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
-                            formatAngka(jumlah),
+                            formatAngka(widget.jumlah),
                             style: Visitors,
                           ),
                         ],
@@ -105,7 +170,7 @@ class DetailsPage extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    '$description',
+                    '${widget.description}',
                     style: Description,
                     textAlign: TextAlign.justify,
                   ),
@@ -122,7 +187,7 @@ class DetailsPage extends StatelessWidget {
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
                       onTap: () {
-                        _openMapUrl('$urlmap');
+                        _openMapUrl('${widget.urlmap}');
                       },
                       child: Container(
                         padding: const EdgeInsets.only(
@@ -158,7 +223,16 @@ class DetailsPage extends StatelessWidget {
                     color: primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: SvgPicture.asset("assets/svgs/add-favorite-icon.svg"),
+                  child: _isFavorite
+                      ? GestureDetector(
+                          onTap: removeFromFavorite,
+                          child: SvgPicture.asset(
+                              "assets/svgs/favorite-dark-icon.svg",
+                              color: Colors.white,))
+                      : GestureDetector(
+                          onTap: addToFavorite,
+                          child: SvgPicture.asset(
+                              "assets/svgs/add-favorite-icon.svg")),
                 ),
               ],
             ),
@@ -194,3 +268,4 @@ class DetailsPage extends StatelessWidget {
     );
   }
 }
+

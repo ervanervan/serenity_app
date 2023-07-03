@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serenity/data/datas.dart';
+import 'package:serenity/utils/localStorage.dart';
 import '../utils/colors.dart';
 import '../utils/text_style.dart';
 import 'card_item.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,12 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String searchValue = "";
-
+  String username = "";
   List<DataPlace> cardList = [];
   final PageController pageController = PageController(viewportFraction: 0.8);
 
   int currentIndex = 0;
-  String activeCategory = "Nongkrong";
+  String activeCategory = "";
 
   @override
   void initState() {
@@ -34,12 +35,20 @@ class _HomePageState extends State<HomePage> {
         currentIndex = pageController.page?.round() ?? 0;
       });
     });
+    _fetchUsername();
   }
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchUsername() async {
+    String? username = await getItem("username");
+    setState(() {
+      this.username = username ?? '';
+    });
   }
 
   void onPageChanged(int index) {
@@ -49,24 +58,45 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onChangeCategory(String category) {
-    setState(() {
+  setState(() {
+    if (activeCategory == category) {
+      closeFilter();
+    } else {
       activeCategory = category;
+    }
+  });
+}
+  void closeFilter() {
+    setState(() {
+      activeCategory = '';
     });
+  }
+  
+  List<DataPlace> getFilteredData() {
+    if (activeCategory.isEmpty) {
+      return cardList.where((data) {
+        final title = data.title.toLowerCase();
+        final location = data.location.toLowerCase();
+        final search = searchValue.toLowerCase();
+        return title.contains(search) || location.contains(search);
+      }).toList();
+    } else {
+      return cardList.where((data) {
+        final title = data.title.toLowerCase();
+        final location = data.location.toLowerCase();
+        final search = searchValue.toLowerCase();
+        return (title.contains(search) || location.contains(search)) &&
+            data.category.toLowerCase() == activeCategory;
+      }).toList();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Filter the cardList based on the searchValue
-    List<DataPlace> filteredData = cardList.where((data) {
-      final title = data.title.toLowerCase();
-      final location = data.location.toLowerCase();
-      final search = searchValue.toLowerCase();
-      return title.contains(search) || location.contains(search);
-    }).toList();
+    List<DataPlace> filteredData = getFilteredData();
 
-    currentIndex = filteredData.isNotEmpty
-        ? currentIndex.clamp(0, filteredData.length - 1)
-        : 0;
+    currentIndex =
+        filteredData.isNotEmpty ? currentIndex.clamp(0, filteredData.length - 1) : 0;
 
     return Scaffold(
       body: SafeArea(
@@ -101,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                               child: Container(
                                 padding: EdgeInsets.only(right: 120),
                                 child: Text(
-                                  'Hi, username',
+                                  'Hi, $username',
                                   overflow: TextOverflow.ellipsis,
                                   style: BodyLocation,
                                   maxLines: 1,
@@ -231,17 +261,17 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: activeCategory == "Nongkrong"
+                                color: activeCategory == "nongkrong"
                                     ? primary
                                     : Colors.transparent,
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  onChangeCategory("Nongkrong");
+                                  onChangeCategory("nongkrong");
                                 },
                                 child: Text(
                                   "Nongkrong",
-                                  style: activeCategory == "Nongkrong"
+                                  style: activeCategory == "nongkrong"
                                       ? BodyCategory
                                       : BodyCategoryOff,
                                 ),
@@ -250,17 +280,17 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: activeCategory == "Sejarah"
+                                color: activeCategory == "sejarah"
                                     ? primary
                                     : Colors.transparent,
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  onChangeCategory("Sejarah");
+                                  onChangeCategory("sejarah");
                                 },
                                 child: Text(
                                   "Sejarah",
-                                  style: activeCategory == "Sejarah"
+                                  style: activeCategory == "sejarah"
                                       ? BodyCategory
                                       : BodyCategoryOff,
                                 ),
@@ -269,17 +299,17 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: activeCategory == "Hiburan"
+                                color: activeCategory == "hiburan"
                                     ? primary
                                     : Colors.transparent,
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  onChangeCategory("Hiburan");
+                                  onChangeCategory("hiburan");
                                 },
                                 child: Text(
                                   "Hiburan",
-                                  style: activeCategory == "Hiburan"
+                                  style: activeCategory == "hiburan"
                                       ? BodyCategory
                                       : BodyCategoryOff,
                                 ),
@@ -298,17 +328,17 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: activeCategory == "Belanja"
+                                color: activeCategory == "belanja"
                                     ? primary
                                     : Colors.transparent,
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  onChangeCategory("Belanja");
+                                  onChangeCategory("belanja");
                                 },
                                 child: Text(
                                   "Belanja",
-                                  style: activeCategory == "Belanja"
+                                  style: activeCategory == "belanja"
                                       ? BodyCategory
                                       : BodyCategoryOff,
                                 ),
@@ -317,17 +347,17 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: activeCategory == "Restoran"
+                                color: activeCategory == "restoran"
                                     ? primary
                                     : Colors.transparent,
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  onChangeCategory("Restoran");
+                                  onChangeCategory("restoran");
                                 },
                                 child: Text(
                                   "Restoran",
-                                  style: activeCategory == "Restoran"
+                                  style: activeCategory == "restoran"
                                       ? BodyCategory
                                       : BodyCategoryOff,
                                 ),

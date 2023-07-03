@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:serenity/components/input_with_icon.dart';
 import 'package:serenity/pages/bottom_bar.dart';
 import 'package:serenity/pages/login_page.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:serenity/utils/text_style.dart';
+import 'package:serenity/utils/localStorage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,22 +17,84 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   TextEditingController _usernameController = TextEditingController();
-  String value = "testing username ini harusnya dari localstorage";
+  String value = "";
 
   @override
   void initState() {
     super.initState();
-    _usernameController = TextEditingController(text: value);
+    _fetchUsername();
+    // _usernameController = TextEditingController(text: value);
+  }
+
+  Future<void> _fetchUsername() async {
+    String? username = await getItem("username");
+    print("username >> $username");
+    setState(() {
+      String? value = username ?? '';
+      this._usernameController = TextEditingController(text: value);
+    });
   }
 
   void _handleLogout() {
     print("dsini ntr pakai localStorage aja");
+    removeItem("username");
+    removeItem("favorite");
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   void _handleUpdateUsername() {
     print("dsini ntr pakai localStorage aja");
+    setItem("username", _usernameController.text);
+    if (_usernameController.text == '') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Warning"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("You must insert your Username!"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Success"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Username updated successfully!"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BottomBar()));
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override

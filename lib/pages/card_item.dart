@@ -52,86 +52,95 @@ class CardItem extends StatelessWidget {
               // width: double.infinity,
               color: Colors.white,
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 223,
-                      child: AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          // height: 223,
-                        ),
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 223,
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        // height: 223,
                       ),
                     ),
-                    Container(
-                        padding: EdgeInsets.only(
-                            left: 16, top: 16, bottom: 16, right: 16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      top: 16,
+                      bottom: 16,
+                      right: 16,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    '$title',
-                                    style: SubHeading2,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    '$location',
-                                    style: BodyLocation,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) => DetailsPage(
-                                                    description: description,
-                                                    image: image,
-                                                    title: title,
-                                                    jumlah: jumlah,
-                                                    urlmap: urlmap,
-                                                  )));
-                                    },
-                                    child: Text(
-                                      "Lihat",
-                                      style: BodyButton,
-                                    ),
-                                  ),
-                                )
-                              ],
+                            Flexible(
+                              child: Text(
+                                '$title',
+                                style: SubHeading2,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
-                        ))
-                  ]),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                '$location',
+                                style: BodyLocation,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: primary,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailsPage(
+                                        id: id,
+                                        title: title,
+                                        image: image,
+                                        description: description,
+                                        urlmap: urlmap,
+                                        jumlah: jumlah,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Lihat",
+                                  style: BodyButton,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

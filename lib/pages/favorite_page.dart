@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serenity/pages/bottom_bar.dart';
 import 'package:serenity/utils/colors.dart';
 import 'package:serenity/data/datas.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/text_style.dart';
 
 class CardWishlist extends StatelessWidget {
@@ -74,6 +75,7 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   List<DataPlace> dataWishlist = [];
+  List<String> favoriteIds = [];
 
   @override
   void initState() {
@@ -83,12 +85,24 @@ class _FavoritePageState extends State<FavoritePage> {
         dataWishlist = data;
       });
     });
+    getFavoriteIds();
   }
 
- 
+  void getFavoriteIds() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favorites = prefs.getStringList("favorite") ?? [];
+    setState(() {
+      favoriteIds = favorites;
+    });
+  }
+
+  List<DataPlace> getFilteredData() {
+    return dataWishlist.where((data) => favoriteIds.contains(data.id)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<DataPlace> filteredData = getFilteredData();
     return Scaffold(
       backgroundColor: background,
       appBar: _appBar(context),
@@ -97,7 +111,7 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Column(
-              children: dataWishlist.map((data) {
+              children: filteredData.map((data) {
                 return CardWishlist(
                   image: data.image,
                   title: data.title,

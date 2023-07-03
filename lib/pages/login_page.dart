@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serenity/components/input_with_icon.dart';
 import 'package:serenity/pages/bottom_bar.dart';
 import 'package:serenity/utils/colors.dart';
+import 'package:serenity/utils/localStorage.dart';
 import 'package:serenity/utils/text_style.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +15,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
+  String username = '';
+  @override
+  void initState() {
+    super.initState();
+    _fetchUsername();
+  }
 
   @override
   void dispose() {
@@ -27,9 +34,52 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handleRegister() {
-    print("dsini ntr pakai localStorage aja");
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BottomBar()));
+    setItem("username", _usernameController.text);
+    if (_usernameController.text == '') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Warning"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("You must insert your Username!"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BottomBar()));
+    }
+  }
+
+  Future<void> _fetchUsername() async {
+    String? username = await getItem("username");
+    setState(() {
+      String value = username ?? '';
+      this.username = value;
+    });
+    checkIsLogin(); // Call the checkIsLogin function here
+  }
+
+  Future<void> checkIsLogin() async {
+    if (username != '') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BottomBar()),
+      );
+    }
   }
 
   @override
