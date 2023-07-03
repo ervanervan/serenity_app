@@ -13,19 +13,21 @@ class CardItem extends StatelessWidget {
   final String category;
   final String location;
   final String description;
+  final String urlmap;
   final int jumlah;
 
-  CardItem(
-      {required this.id,
-      required this.scale,
-      required this.isActive,
-      required this.image,
-      required this.title,
-      required this.description,
-      required this.location,
-      required this.jumlah,
-      required this.category,
-      });
+  CardItem({
+    required this.id,
+    required this.scale,
+    required this.isActive,
+    required this.image,
+    required this.title,
+    required this.description,
+    required this.location,
+    required this.jumlah,
+    required this.category,
+    required this.urlmap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +118,7 @@ class CardItem extends StatelessWidget {
                                                     image: image,
                                                     title: title,
                                                     jumlah: jumlah,
+                                                    urlmap: urlmap,
                                                   )));
                                     },
                                     child: Text(

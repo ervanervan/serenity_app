@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:serenity/utils/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/text_style.dart';
 import 'bottom_bar.dart';
 
@@ -8,6 +9,7 @@ class DetailsPage extends StatelessWidget {
   final String title;
   final String image;
   final String description;
+  final String urlmap;
   final int jumlah;
 
   DetailsPage({
@@ -15,6 +17,7 @@ class DetailsPage extends StatelessWidget {
     required this.image,
     required this.description,
     required this.jumlah,
+    required this.urlmap,
   });
 
   String formatAngka(int angka) {
@@ -29,6 +32,14 @@ class DetailsPage extends StatelessWidget {
       return hasil.toStringAsFixed(1) + 'rb';
     } else {
       return angka.toString();
+    }
+  }
+
+  void _openMapUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -107,25 +118,33 @@ class DetailsPage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                      top: 13,
-                      bottom: 13,
-                    ),
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(
-                      bottom: 24,
-                      right: 16,
-                      left: 24,
-                    ),
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      "Arahkan ke lokasi",
-                      textAlign: TextAlign.center,
-                      style: BodyButtonLarge,
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        _openMapUrl('$urlmap');
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 13,
+                          bottom: 13,
+                        ),
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(
+                          bottom: 24,
+                          right: 16,
+                          left: 24,
+                        ),
+                        decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          "Arahkan ke lokasi",
+                          textAlign: TextAlign.center,
+                          style: BodyButtonLarge,
+                        ),
+                      ),
                     ),
                   ),
                 ),

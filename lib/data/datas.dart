@@ -1,6 +1,7 @@
 // tipe data list CardItemData
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 // DataPlace class
 class DataPlace {
   final String id;
@@ -26,7 +27,8 @@ class DataPlace {
 
 // fetchData function
 Future<List<DataPlace>> fetchData() async {
-  final response = await http.get(Uri.parse('https://spotless-duck-shorts.cyclic.app/places'));
+  final response = await http
+      .get(Uri.parse('https://spotless-duck-shorts.cyclic.app/places'));
 
   if (response.statusCode == 200) {
     final jsonData = json.decode(response.body);
@@ -39,15 +41,14 @@ Future<List<DataPlace>> fetchData() async {
 
         for (var item in dataJson) {
           DataPlace place = DataPlace(
-            id: item['_id'],
-            title: item['title'],
-            location: item['location'],
-            description: item['description'],
-            image: item['image'],
-            urlmap: item['urlmap'],
-            jumlah: item['jumlah'], // Assign as string
-            category: item['category']
-          );
+              id: item['_id'],
+              title: item['title'],
+              location: item['location'],
+              description: item['description'],
+              image: item['image'],
+              urlmap: item['urlmap'],
+              jumlah: item['jumlah'], // Assign as string
+              category: item['category']);
           data.add(place);
         }
 

@@ -193,6 +193,7 @@ class _HomePageState extends State<HomePage> {
                                     id: cardActive.id,
                                     image: cardActive.image,
                                     scale: scale,
+                                    urlmap: cardActive.urlmap,
                                     jumlah: cardActive.jumlah,
                                     isActive: index == currentIndex,
                                   );
