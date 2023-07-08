@@ -105,7 +105,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
     await prefs.setStringList("favorite", favorites);
     print("favorites >> $favorites");
-
   }
 
   @override
@@ -213,6 +212,20 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ),
+
+                /*
+                
+                Ketika tombol "Arahkan ke lokasi" ditekan oleh pengguna, maka 
+                fungsi _openMapUrl('${widget.urlmap}'); akan dijalankan dengan 
+                mengirimkan parameter ${widget.urlmap}. Dimana berisi URL yang
+                mengarahkan pengguna ke Google Maps dengan lokasi yang 
+                ditentukan sebelumnya. Fungsi _openMapUrl() akan mengambil URL
+                sebagai argumen dan membuka URL tersebut. Pengguna akan 
+                diarahkan ke aplikasi Google Maps atau tampilan web Google Maps
+                dengan tujuan lokasi yang ditentukan dalam URL.
+
+                */
+
                 Container(
                   padding: const EdgeInsets.all(13),
                   margin: const EdgeInsets.only(
@@ -227,8 +240,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       ? GestureDetector(
                           onTap: removeFromFavorite,
                           child: SvgPicture.asset(
-                              "assets/svgs/favorite-dark-icon.svg",
-                              color: Colors.white,))
+                            "assets/svgs/favorite-dark-icon.svg",
+                            color: Colors.white,
+                          ))
                       : GestureDetector(
                           onTap: addToFavorite,
                           child: SvgPicture.asset(
@@ -268,4 +282,3 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 }
-

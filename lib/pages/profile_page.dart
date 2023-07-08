@@ -36,12 +36,23 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _handleLogout() {
-    print("dsini ntr pakai localStorage aja");
     removeItem("username");
     removeItem("favorite");
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
+
+/*
+
+void _handleLogout() {
+print("dsini ntr pakai localStorage aja");
+Pada fungsi `removeItem("username"); ini akan menghapus item dengan kunci "username" 
+dari penyimpanan lokal aplikasi. Sedangkan fungsi `removeItem("favorite");` akan 
+menghapus item dengan kunci "favorite" dari penyimpanan lokal aplikasi. Setelah itu
+maka pengguna akan diarahkan ke halaman baru yaitu halaman `LoginPage`.
+}
+
+*/
 
   void _handleUpdateUsername() {
     print("dsini ntr pakai localStorage aja");
